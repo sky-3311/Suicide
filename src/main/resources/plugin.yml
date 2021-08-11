@@ -1,0 +1,15 @@
+name: Suicide
+version: ${project.version}
+main: com.carpour.suicide.Main
+authors: [ Prism3 ]
+description: Simple suicide command with some cool features.
+commands:
+  suicide:
+    description: To Suicide.
+permissions:
+  suicide.command:
+    description: Allows to suicide.
+    default: true
+  suicide.reload:
+    description: Allows to reload the Plugin.
+    default: op

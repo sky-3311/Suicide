@@ -1,0 +1,47 @@
+# /////////////////////////////////////////////////////////////
+# /                                                           /
+# /                      Suicide Plugin                       /
+# /                                                           /
+# /////////////////////////////////////////////////////////////
+#
+# Thank you for using Suicide Plugin! If you are experiencing any issues
+# or have any suggestions / features you want implemented into the plugin
+# feel free to join the support Discord Server!
+#
+# Spigot: Prism3
+# Discord: Prism3#5787 | ID: 403667971089760257
+# Discord Server: https://discord.gg/MfR5mcpVfX
+
+
+# Should we disable the message sent to the player when executing the command?
+Message: false
+
+# Should we disable the Suicide Broadcast message?
+Broadcast: false
+
+# Should we disable the Fireworks upon the player's death?
+Firework: false
+
+# Should we disable Death location Coords?
+Coords: false
+
+# Should we disable the sound when executing the command?
+# Sound that's played upon player's death.
+# List of sounds: https://www.spigotmc.org/wiki/cc-sounds-list/. Use The Sounds that are 1.9 or higher!
+# Volume and Pitch can go from 0 to 100.
+Sound:
+  Disable: false
+  SoundPlayed: 'ENTITY_ZOMBIE_HURT'
+  Volume: 50
+  Pitch: 50
+
+Disabled-Worlds:
+  - 'world_name'
+
+Messages:
+  No-Permission: '&cYou do not have permission to run this command.'
+  Reload-Message: '&aConfig Reloaded.'
+  Invalid-Syntax: '&cInvalid Syntax!'
+  Disabled-Message: '&cSuiciding in this world is disabled.'
+  Message-Sent-on-Suicide: '&c&lYou Suicided!'
+  Broadcast-Message: '&c&l%player% has committed suicide!'
