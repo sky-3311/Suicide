@@ -14,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import java.util.Objects;
+
 import static org.bukkit.Bukkit.getServer;
 
 public class SuicideCommand implements CommandExecutor, Listener {
@@ -35,10 +37,12 @@ public class SuicideCommand implements CommandExecutor, Listener {
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if(args.length == 1 && !args[0].equalsIgnoreCase("Reload"))
+        if(args.length != 0 && !args[0].equalsIgnoreCase("Reload"))
         {
 
             sender.sendMessage(main.getConfig().getString("Messages.Invalid-Syntax").replaceAll("&", "§"));
+
+            return false;
 
         }
 
@@ -66,7 +70,17 @@ public class SuicideCommand implements CommandExecutor, Listener {
 
             }
 
-        } else if(sender instanceof Player && sender.hasPermission("suicide.command")) {
+        }
+
+        else if (args.length > 1 && args[0].equalsIgnoreCase("Reload")){
+
+            sender.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Invalid-Syntax")).replaceAll("&", "§"));
+
+            return false;
+
+        }
+
+        else if(sender instanceof Player && sender.hasPermission("suicide.command")) {
 
             Player player = (Player) sender;
 
