@@ -13,8 +13,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 
+import java.util.HashMap;
 import java.util.Objects;
+import java.util.UUID;
 
 import static org.bukkit.Bukkit.getServer;
 
@@ -22,12 +25,16 @@ public class SuicideCommand implements CommandExecutor, Listener {
 
     private final Main main = Main.getInstance();
 
+    private final HashMap<UUID, Long> cooldown = new HashMap<>();
+
+    private final long cooldowntime = main.getConfig().getLong("Cooldown.Timer");
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDeath(PlayerDeathEvent e){
 
         Player player = e.getEntity();
 
-        if(Main.getInstance().getPlayers().contains(player.getUniqueId()) && (!(main.getConfig().getBoolean("Broadcast")))){
+        if(Main.getInstance().getPlayers().contains(player.getUniqueId()) && !main.getConfig().getBoolean("Broadcast")){
 
             Main.getInstance().getPlayers().remove(player.getUniqueId());
             e.setDeathMessage(null);
@@ -91,9 +98,33 @@ public class SuicideCommand implements CommandExecutor, Listener {
 
             }
 
+            if (!main.getConfig().getBoolean("Cooldown.Disable") && !player.hasPermission("suicide.bypass")) {
+
+                if (cooldown.containsKey(player.getUniqueId())) {
+
+                    long secondsleft = ((cooldown.get(player.getUniqueId()) / 1000) + cooldowntime) - (System.currentTimeMillis() / 1000);
+
+                    if (cooldowntime <= 0) return false;
+
+                    if (secondsleft > 0) {
+
+                        player.sendMessage(main.getConfig().getString("Messages.On-Cooldown").replaceAll("&", "§").replaceAll("%time%", String.valueOf(secondsleft)));
+
+                    }else {
+                        cooldown.remove(player.getUniqueId());
+                        player.setHealth(0.0);
+                        cooldown.put(player.getUniqueId(), System.currentTimeMillis());
+                    }
+
+                    return false;
+
+                }
+            }
+
             main.getPlayers().add(player.getUniqueId());
 
             player.setHealth(0.0);
+            cooldown.put(player.getUniqueId(), System.currentTimeMillis());
 
             if(!main.getConfig().getBoolean("Broadcast")){
 
@@ -113,6 +144,7 @@ public class SuicideCommand implements CommandExecutor, Listener {
                 meta.addEffect(FireworkEffect.builder().withColor(Color.RED).with(Type.BALL_LARGE).withFlicker().build());
                 meta.setPower(1);
                 firework.setFireworkMeta(meta);
+                firework.setMetadata("nodamage", new FixedMetadataValue(main, true));
 
             }
 

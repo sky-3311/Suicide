@@ -1,5 +1,6 @@
 package com.carpour.suicide;
 
+import Events.EntityDamageByEntity;
 import com.carpour.suicide.Utils.Metrics;
 import com.carpour.suicide.Utils.UpdateChecker;
 import com.carpour.suicide.commands.SuicideCommand;
@@ -29,6 +30,7 @@ public class Main extends JavaPlugin{
 
         getCommand("suicide").setExecutor(new SuicideCommand());
         getServer().getPluginManager().registerEvents(new SuicideCommand(), this);
+        getServer().getPluginManager().registerEvents(new EntityDamageByEntity(), this);
 
         //bstats
 

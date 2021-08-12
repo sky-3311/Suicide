@@ -10,6 +10,9 @@ permissions:
   suicide.command:
     description: Allows to suicide.
     default: true
+  suicide.bypass:
+    description: Bypasses the cooldown
+    default: op
   suicide.reload:
     description: Allows to reload the Plugin.
     default: op

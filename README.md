@@ -14,3 +14,5 @@ This plugin can make the /suicide more usable if so the say with its features.
 * Sends a Firework into the sky upon Suiciding
 * Plays a Sound upon Suiciding
 * Can be Disabled in Desired Worlds
+* Cooldown for the Command
+* Harmless Firework
