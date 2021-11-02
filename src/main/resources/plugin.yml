@@ -1,18 +1,19 @@
 name: Suicide
 version: ${project.version}
 main: com.carpour.suicide.Main
+api-version: 1.13
 authors: [ Prism3 ]
-description: Simple suicide command with some cool features.
+description: Simple suicide command with some cool features
 commands:
   suicide:
-    description: To Suicide.
+    description: To Suicide
 permissions:
   suicide.command:
-    description: Allows to suicide.
+    description: "Suicide command"
     default: true
   suicide.bypass:
-    description: Bypasses the cooldown
+    description: "Bypasses the cooldown"
     default: op
   suicide.reload:
-    description: Allows to reload the Plugin.
+    description: "Allows to reload the Plugin"
     default: op

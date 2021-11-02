@@ -1,4 +1,4 @@
-package Events;
+package com.carpour.suicide.Events;
 
 import org.bukkit.entity.Firework;
 import org.bukkit.event.EventHandler;
@@ -12,7 +12,7 @@ public class EntityDamageByEntity implements Listener {
 
         if (e.getDamager() instanceof Firework) {
             Firework fw = (Firework) e.getDamager();
-            if (fw.hasMetadata("nodamage")) {
+            if (fw.hasMetadata("noDamage")) {
                 e.setCancelled(true);
             }
         }

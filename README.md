@@ -1,16 +1,16 @@
 # Suicide
-A simple little plugin yet with some cool features.
+A simple plugin yet with some cool features.
 
-This plugin can be found on two locations at the moment [Spigot](https://www.spigotmc.org/resources/suicide.93367/) and [MC-Market](https://www.mc-market.org/resources/20360/).
+This plugin can be found on [Spigot](https://www.spigotmc.org/resources/suicide.93367/) and [MC-Market](https://www.mc-market.org/resources/20360/).
 
-If support is needed, join my [Discord](https://discord.gg/MfR5mcpVfX).
+If support is needed or a suggesting that needs to be implemented, feel free to ask on the [Discord](https://discord.gg/MfR5mcpVfX).
 
 # About the Plugin
-This plugin can make the /suicide more usable if so the say with its features.
+This plugin adds little tweaks to the /suicide command.
 
 **This is what The Suicide Plugin can do:**
-* Broadcasts if the Player has Suicided
-* Display the Death Location
+* Broadcasts if the player has Suicided
+* Display the death location
 * Sends a Firework into the sky upon Suiciding
 * Plays a Sound upon Suiciding
 * Can be Disabled in Desired Worlds

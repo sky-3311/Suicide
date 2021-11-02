@@ -46,10 +46,10 @@ Disabled-Worlds:
   - 'world_name'
 
 Messages:
-  No-Permission: '&cYou do not have permission to run this command.'
-  Reload-Message: '&aConfig Reloaded.'
-  Invalid-Syntax: '&cInvalid Syntax!'
-  Disabled-Message: '&cSuiciding in this world is disabled.'
-  Message-Sent-on-Suicide: '&c&lYou Suicided!'
-  Broadcast-Message: '&c&l%player% has committed suicide!'
-  On-Cooldown: '&6You must wait %time% second(s) to execute this command!'
+  No-Permission: "&cYou do not have permission to run this command."
+  Reload-Message: "&aConfig Reloaded."
+  Invalid-Syntax: "&cInvalid Syntax!"
+  Disabled-Message: "&cSuiciding in this world is disabled."
+  Message-Sent-on-Suicide: "&c&lYou Suicided!"
+  Broadcast-Message: "&c&l%player% has committed suicide!"
+  On-Cooldown: "&6You must wait %time% second(s) to execute this command!"

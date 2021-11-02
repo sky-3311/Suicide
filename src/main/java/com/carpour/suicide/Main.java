@@ -1,6 +1,7 @@
 package com.carpour.suicide;
 
-import Events.EntityDamageByEntity;
+import com.carpour.suicide.Events.EntityDamageByEntity;
+import com.carpour.suicide.Events.OnPlayerDeath;
 import com.carpour.suicide.Utils.Metrics;
 import com.carpour.suicide.Utils.UpdateChecker;
 import com.carpour.suicide.commands.SuicideCommand;
@@ -9,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Main extends JavaPlugin{
@@ -28,8 +30,8 @@ public class Main extends JavaPlugin{
         getConfig().options().copyDefaults();
         saveDefaultConfig();
 
-        getCommand("suicide").setExecutor(new SuicideCommand());
-        getServer().getPluginManager().registerEvents(new SuicideCommand(), this);
+        Objects.requireNonNull(getCommand("suicide")).setExecutor(new SuicideCommand());
+        getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageByEntity(), this);
 
         //bstats
