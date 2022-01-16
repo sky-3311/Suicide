@@ -15,5 +15,5 @@ permissions:
     description: "Bypasses the cooldown"
     default: op
   suicide.reload:
-    description: "Allows to reload the Plugin"
+    description: "Reload the Plugin"
     default: op

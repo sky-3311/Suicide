@@ -9,7 +9,7 @@
 # feel free to join the support Discord Server!
 #
 # Spigot: Prism3
-# Discord: Prism3#5787 | ID: 403667971089760257
+# Discord: Prism3#9371 | ID: 403667971089760257
 # Discord Server: https://discord.gg/MfR5mcpVfX
 
 
@@ -22,13 +22,13 @@ Broadcast: false
 # Should we disable the Fireworks upon the player's death?
 Firework: false
 
-# Should we disable Death location Coords?
+# Should we disable death location Coords?
 Coords: false
 
 # Should we disable the sound when executing the command?
 # Sound that's played upon player's death.
 # List of sounds: https://www.spigotmc.org/wiki/cc-sounds-list/. Use The Sounds that are 1.9 or higher!
-# Volume and Pitch can vary from 0 and 100.
+# Volume and Pitch can vary from 0 -> 100.
 Sound:
   Disable: false
   SoundPlayed: 'ENTITY_ZOMBIE_HURT'
@@ -36,7 +36,7 @@ Sound:
   Pitch: 50
 
 # Should we disable the suicide cooldown?
-# Timer in Second [ Restart the Server if Changed ]
+# Timer in Second
 Cooldown:
   Disable: false
   Timer: 15
@@ -47,9 +47,9 @@ Disabled-Worlds:
 
 Messages:
   No-Permission: "&cYou do not have permission to run this command."
-  Reload-Message: "&aConfig Reloaded."
+  Reload: "&aConfig Reloaded."
   Invalid-Syntax: "&cInvalid Syntax!"
-  Disabled-Message: "&cSuiciding in this world is disabled."
+  Disabled: "&cSuiciding in this world is disabled."
   Message-Sent-on-Suicide: "&c&lYou Suicided!"
-  Broadcast-Message: "&c&l%player% has committed suicide!"
+  Broadcast: "&c&l%player% has committed suicide!"
   On-Cooldown: "&6You must wait %time% second(s) to execute this command!"

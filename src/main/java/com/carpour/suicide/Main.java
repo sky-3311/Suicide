@@ -1,11 +1,10 @@
 package com.carpour.suicide;
 
-import com.carpour.suicide.Events.EntityDamageByEntity;
-import com.carpour.suicide.Events.OnPlayerDeath;
+import com.carpour.suicide.Events.EntityDamage;
+import com.carpour.suicide.Events.PlayerDeath;
 import com.carpour.suicide.Utils.Metrics;
-import com.carpour.suicide.Utils.UpdateChecker;
 import com.carpour.suicide.commands.SuicideCommand;
-import org.bukkit.ChatColor;
+import de.jeff_media.updatechecker.UpdateChecker;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ import java.util.UUID;
 public class Main extends JavaPlugin{
 
     private static Main instance;
-
     private List<UUID> players;
 
     @Override
@@ -25,22 +23,33 @@ public class Main extends JavaPlugin{
         instance = this;
         players = new ArrayList<>();
 
-        getServer().getConsoleSender().sendMessage("[Suicide] "+ ChatColor.GREEN + "Plugin Enabled!");
-
         getConfig().options().copyDefaults();
         saveDefaultConfig();
 
         Objects.requireNonNull(getCommand("suicide")).setExecutor(new SuicideCommand());
-        getServer().getPluginManager().registerEvents(new OnPlayerDeath(), this);
-        getServer().getPluginManager().registerEvents(new EntityDamageByEntity(), this);
+
+        getServer().getPluginManager().registerEvents(new PlayerDeath(), this);
+        getServer().getPluginManager().registerEvents(new EntityDamage(), this);
 
         //bstats
-
-        Metrics metrics = new Metrics(this, 11664);
+        new Metrics(this, 11664);
 
         //Update Checker
-        UpdateChecker updater = new UpdateChecker(this);
-        updater.checkForUpdate();
+        int resource_ID = 93367;
+        UpdateChecker.init(this, resource_ID)
+                .checkEveryXHours(2)
+                .setChangelogLink(resource_ID)
+                .setNotifyOpsOnJoin(true)
+                .checkNow();
+
+        getLogger().info("Plugin Enabled!");
+    }
+
+    @Override
+    public void onDisable() {
+
+        getLogger().info("Plugin Disabled!");
+
     }
 
     public static Main getInstance() {
@@ -49,12 +58,5 @@ public class Main extends JavaPlugin{
 
     public List<UUID> getPlayers() {
         return players;
-    }
-
-    @Override
-    public void onDisable() {
-
-        getServer().getConsoleSender().sendMessage("[Suicide] " + ChatColor.RED + "Plugin Disabled!");
-
     }
 }
