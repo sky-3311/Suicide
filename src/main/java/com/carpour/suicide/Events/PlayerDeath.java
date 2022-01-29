@@ -15,7 +15,7 @@ public class PlayerDeath implements Listener {
 
         Player player = event.getEntity();
 
-        if(Main.getInstance().getPlayers().contains(player.getUniqueId()) && !main.getConfig().getBoolean("Broadcast")){
+        if (Main.getInstance().getPlayers().contains(player.getUniqueId()) && !main.getConfig().getBoolean("Broadcast")){
 
             Main.getInstance().getPlayers().remove(player.getUniqueId());
             event.setDeathMessage(null);

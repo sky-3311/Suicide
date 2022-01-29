@@ -51,5 +51,10 @@ Messages:
   Invalid-Syntax: "&cInvalid Syntax!"
   Disabled: "&cSuiciding in this world is disabled."
   Message-Sent-on-Suicide: "&c&lYou Suicided!"
-  Broadcast: "&c&l%player% has committed suicide!"
   On-Cooldown: "&6You must wait %time% second(s) to execute this command!"
+  Broadcast:
+    Random: true
+    Messages:
+    - "&c&l%player% has committed suicide!"
+    - "&c&l%player% got whacked."
+    - "&c&l%player% died."

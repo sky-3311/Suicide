@@ -11,15 +11,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class SuicideCommand implements CommandExecutor {
 
     private final Main main = Main.getInstance();
     private final HashMap<UUID, Long> coolDown = new HashMap<>();
     private final long coolDownTime = main.getConfig().getLong("Cooldown.Timer");
+    private int i = 0;
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
@@ -90,18 +89,32 @@ public class SuicideCommand implements CommandExecutor {
                 player.setHealth(0.0);
                 coolDown.put(player.getUniqueId(), System.currentTimeMillis());
 
+                // BroadCast
                 if (!main.getConfig().getBoolean("Broadcast")) {
 
-                    Bukkit.broadcastMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Broadcast")).replace("%player%", player.getName()).replaceAll("&", "§"));
+                    final List<String> broadCast = main.getConfig().getStringList("Messages.Broadcast.Messages");
 
+                    if (main.getConfig().getBoolean("Messages.Broadcast.Random")){
+
+                        Collections.shuffle(broadCast);
+
+                        Bukkit.broadcastMessage(broadCast.get(0).replace("%player%", player.getName()).replace("&", "§"));
+
+                    } else {
+
+                        Bukkit.broadcastMessage(broadCast.get(i).replace("%player%", player.getName()).replace("&", "§"));
+                        i++;
+                    }
                 }
 
+                // Suicide Message to the Player
                 if (!main.getConfig().getBoolean("Message")) {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Message-Sent-on-Suicide")).replaceAll("&", "§"));
+                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Message-Sent-on-Suicide")).replace("&", "§"));
 
                 }
 
+                // Firework on Player Death
                 if (!main.getConfig().getBoolean("Firework")) {
 
                     Firework firework = player.getWorld().spawn(player.getLocation(), Firework.class);
@@ -113,6 +126,7 @@ public class SuicideCommand implements CommandExecutor {
 
                 }
 
+                // Sends the death coords to the player
                 if (!main.getConfig().getBoolean("Coords")) {
 
                     int x = player.getLocation().getBlockX();
@@ -122,6 +136,7 @@ public class SuicideCommand implements CommandExecutor {
 
                 }
 
+                // Sound Feature
                 if (!main.getConfig().getBoolean("Sound.Disable")) {
 
                     Location loc = player.getLocation();
