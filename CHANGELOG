@@ -1,0 +1,30 @@
+<-!------------------------------------------ v1.4 ------------------------------------------!->
+
+Additions
+    [+] CoolDown feature
+    [+] New Permission node "suicide.bypass" to bypass the cooldown
+
+Changes
+    [*] Made the Firework Harmless to Prevent any Abuse / Exploit
+
+<-!------------------------------------------ v1.4.1 ------------------------------------------!->
+
+Additions
+    [+] New Update Checker
+
+Changes
+    [*] Minor Code Changes
+
+<-!------------------------------------------ v1.4.2 ------------------------------------------!->
+
+Additions
+    [+] Random messages being BroadCasted to players on Player Death
+    [+] Ability to set more than one broadcast message
+
+<-!------------------------------------------ v1.4.3 ------------------------------------------!->
+
+Additions
+    [+] 1.18.2 Support
+
+Changes
+    [*] Minor Code Improvements

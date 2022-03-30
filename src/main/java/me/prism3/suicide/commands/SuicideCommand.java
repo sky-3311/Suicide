@@ -1,6 +1,6 @@
-package com.carpour.suicide.commands;
+package me.prism3.suicide.commands;
 
-import com.carpour.suicide.Main;
+import me.prism3.suicide.Main;
 import org.bukkit.*;
 import org.bukkit.FireworkEffect.Type;
 import org.bukkit.command.Command;
@@ -13,39 +13,40 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.*;
 
+import static me.prism3.suicide.Utils.Data.*;
+
 public class SuicideCommand implements CommandExecutor {
 
     private final Main main = Main.getInstance();
     private final HashMap<UUID, Long> coolDown = new HashMap<>();
-    private final long coolDownTime = main.getConfig().getLong("Cooldown.Timer");
     private int i = 0;
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
         if (args.length != 0 && !(args[0].equalsIgnoreCase("Reload"))) {
 
-            sender.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Invalid-Syntax")).replaceAll("&", "§"));
+            sender.sendMessage(Objects.requireNonNull(this.main.getConfig().getString("Messages.Invalid-Syntax")).replaceAll("&", "§"));
 
             return false;
 
         } else if (args.length == 1) {
 
-            if (args[0].equalsIgnoreCase("reload") && sender.hasPermission("suicide.reload")) {
+            if (args[0].equalsIgnoreCase("reload") && sender.hasPermission(suicideReload)) {
 
-                main.reloadConfig();
-                sender.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Reload")).replaceAll("&", "§"));
+                this.main.reloadConfig();
+                sender.sendMessage(Objects.requireNonNull(this.main.getConfig().getString("Messages.Reload")).replaceAll("&", "§"));
 
                 return true;
 
             } else {
 
-                sender.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.No-Permission")).replaceAll("&", "§"));
+                sender.sendMessage(Objects.requireNonNull(this.main.getConfig().getString("Messages.No-Permission")).replaceAll("&", "§"));
                 return false;
 
             }
         } else if (args.length > 1 && args[0].equalsIgnoreCase("Reload")) {
 
-            sender.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Invalid-Syntax")).replaceAll("&", "§"));
+            sender.sendMessage(Objects.requireNonNull(this.main.getConfig().getString("Messages.Invalid-Syntax")).replaceAll("&", "§"));
             return false;
 
         } else if (args.length == 0) {
@@ -54,14 +55,14 @@ public class SuicideCommand implements CommandExecutor {
 
                 Player player = (Player) sender;
 
-                if (main.getConfig().getStringList("Disabled-Worlds").contains(player.getWorld().getName())) {
+                if (disabledWorlds.contains(player.getWorld().getName())) {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Disabled")).replaceAll("&", "§"));
+                    player.sendMessage(Objects.requireNonNull(this.main.getConfig().getString("Messages.Disabled")).replaceAll("&", "§"));
                     return false;
 
                 }
 
-                if (!main.getConfig().getBoolean("Cooldown.Disable") && !player.hasPermission("suicide.bypass")) {
+                if (!isCoolDown && !player.hasPermission(suicideBypass)) {
 
                     if (coolDown.containsKey(player.getUniqueId())) {
 
@@ -71,7 +72,7 @@ public class SuicideCommand implements CommandExecutor {
 
                         if (secondsLeft > 0) {
 
-                            player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.On-Cooldown")).replaceAll("&", "§").replaceAll("%time%", String.valueOf(secondsLeft)));
+                            player.sendMessage(Objects.requireNonNull(this.main.getConfig().getString("Messages.On-Cooldown")).replaceAll("&", "§").replaceAll("%time%", String.valueOf(secondsLeft)));
 
                         } else {
                             coolDown.remove(player.getUniqueId());
@@ -84,17 +85,15 @@ public class SuicideCommand implements CommandExecutor {
                     }
                 }
 
-                main.getPlayers().add(player.getUniqueId());
+                this.main.getPlayers().add(player.getUniqueId());
 
                 player.setHealth(0.0);
                 coolDown.put(player.getUniqueId(), System.currentTimeMillis());
 
                 // BroadCast
-                if (!main.getConfig().getBoolean("Broadcast")) {
+                if (!isBroadCast) {
 
-                    final List<String> broadCast = main.getConfig().getStringList("Messages.Broadcast.Messages");
-
-                    if (main.getConfig().getBoolean("Messages.Broadcast.Random")){
+                    if (isBroadCastRandom){
 
                         Collections.shuffle(broadCast);
 
@@ -108,26 +107,26 @@ public class SuicideCommand implements CommandExecutor {
                 }
 
                 // Suicide Message to the Player
-                if (!main.getConfig().getBoolean("Message")) {
+                if (!isMessage) {
 
                     player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Message-Sent-on-Suicide")).replace("&", "§"));
 
                 }
 
                 // Firework on Player Death
-                if (!main.getConfig().getBoolean("Firework")) {
+                if (!isFirework) {
 
                     Firework firework = player.getWorld().spawn(player.getLocation(), Firework.class);
                     FireworkMeta meta = firework.getFireworkMeta();
                     meta.addEffect(FireworkEffect.builder().withColor(Color.RED).with(Type.BALL_LARGE).withFlicker().build());
                     meta.setPower(1);
                     firework.setFireworkMeta(meta);
-                    firework.setMetadata("noDamage", new FixedMetadataValue(main, true));
+                    firework.setMetadata("noDamage", new FixedMetadataValue(this.main, true));
 
                 }
 
                 // Sends the death coords to the player
-                if (!main.getConfig().getBoolean("Coords")) {
+                if (!isCoords) {
 
                     int x = player.getLocation().getBlockX();
                     int y = player.getLocation().getBlockY();
@@ -137,16 +136,16 @@ public class SuicideCommand implements CommandExecutor {
                 }
 
                 // Sound Feature
-                if (!main.getConfig().getBoolean("Sound.Disable")) {
+                if (!isSound) {
 
                     Location loc = player.getLocation();
-                    player.playSound(loc, Sound.valueOf(main.getConfig().getString("Sound.SoundPlayed")), (main.getConfig().getInt("Sound.Volume")), (main.getConfig().getInt("Sound.Pitch")));
+                    player.playSound(loc, Sound.valueOf(playedSound), (soundVolume), (soundPitch));
 
                 }
 
             } else {
 
-                main.getLogger().severe("This command can only be run in-game!");
+                this.main.getLogger().severe("This command can only be run in-game!");
 
             }
         } return true;

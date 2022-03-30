@@ -1,6 +1,6 @@
 name: Suicide
 version: ${project.version}
-main: com.carpour.suicide.Main
+main: me.prism3.suicide.Main
 api-version: 1.13
 authors: [ Prism3 ]
 description: Simple suicide command with some cool features

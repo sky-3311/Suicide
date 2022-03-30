@@ -1,21 +1,21 @@
-package com.carpour.suicide.Events;
+package me.prism3.suicide.Events;
 
-import com.carpour.suicide.Main;
+import me.prism3.suicide.Main;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class PlayerDeath implements Listener {
+import static me.prism3.suicide.Utils.Data.isBroadCast;
 
-    private final Main main = Main.getInstance();
+public class PlayerDeath implements Listener {
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event){
 
         Player player = event.getEntity();
 
-        if (Main.getInstance().getPlayers().contains(player.getUniqueId()) && !main.getConfig().getBoolean("Broadcast")){
+        if (Main.getInstance().getPlayers().contains(player.getUniqueId()) && !isBroadCast){
 
             Main.getInstance().getPlayers().remove(player.getUniqueId());
             event.setDeathMessage(null);

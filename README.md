@@ -5,6 +5,7 @@
 ![Downloads](https://img.shields.io/github/downloads/ExceptedPrism3/Suicide/total)
 ![Issues](https://img.shields.io/github/issues/ExceptedPrism3/Suicide)
 [![Discord](https://img.shields.io/discord/850407951629287424)](https://discord.gg/MfR5mcpVfX)
+[![Open Source](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://opensource.org/)
 
 A simple plugin yet with some cool features.
 

@@ -1,4 +1,4 @@
-package com.carpour.suicide.Events;
+package me.prism3.suicide.Events;
 
 import org.bukkit.entity.Firework;
 import org.bukkit.event.EventHandler;
