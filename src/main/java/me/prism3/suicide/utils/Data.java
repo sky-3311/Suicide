@@ -1,4 +1,4 @@
-package me.prism3.suicide.Utils;
+package me.prism3.suicide.utils;
 
 import me.prism3.suicide.Main;
 

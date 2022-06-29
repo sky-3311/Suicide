@@ -1,4 +1,4 @@
-package me.prism3.suicide.Events;
+package me.prism3.suicide.events;
 
 import me.prism3.suicide.Main;
 import org.bukkit.entity.Player;
@@ -6,14 +6,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-import static me.prism3.suicide.Utils.Data.isBroadCast;
+import static me.prism3.suicide.utils.Data.isBroadCast;
 
 public class PlayerDeath implements Listener {
 
     @EventHandler
-    public void onDeath(PlayerDeathEvent event){
+    public void onDeath(final PlayerDeathEvent event){
 
-        Player player = event.getEntity();
+        final Player player = event.getEntity();
 
         if (Main.getInstance().getPlayers().contains(player.getUniqueId()) && !isBroadCast){
 

@@ -1,4 +1,4 @@
-package me.prism3.suicide.Utils;
+package me.prism3.suicide.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;

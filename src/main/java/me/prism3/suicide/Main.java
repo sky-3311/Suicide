@@ -1,10 +1,10 @@
 package me.prism3.suicide;
 
 import de.jeff_media.updatechecker.UpdateChecker;
-import me.prism3.suicide.Events.EntityDamage;
-import me.prism3.suicide.Events.PlayerDeath;
-import me.prism3.suicide.Utils.Data;
-import me.prism3.suicide.Utils.Metrics;
+import me.prism3.suicide.events.EntityDamage;
+import me.prism3.suicide.events.PlayerDeath;
+import me.prism3.suicide.utils.Data;
+import me.prism3.suicide.utils.Metrics;
 import me.prism3.suicide.commands.SuicideCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import static me.prism3.suicide.Utils.Data.resourceID;
+import static me.prism3.suicide.utils.Data.resourceID;
 
 public class Main extends JavaPlugin{
 
@@ -41,7 +41,7 @@ public class Main extends JavaPlugin{
 
         // Update Checker
         UpdateChecker.init(this, resourceID)
-                .checkEveryXHours(2)
+                .checkEveryXHours(4)
                 .setChangelogLink(resourceID)
                 .setNotifyOpsOnJoin(true)
                 .checkNow();

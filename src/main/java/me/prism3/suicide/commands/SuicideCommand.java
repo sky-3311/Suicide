@@ -13,7 +13,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.*;
 
-import static me.prism3.suicide.Utils.Data.*;
+import static me.prism3.suicide.utils.Data.*;
 
 public class SuicideCommand implements CommandExecutor {
 
@@ -25,7 +25,7 @@ public class SuicideCommand implements CommandExecutor {
 
         if (args.length != 0 && !(args[0].equalsIgnoreCase("Reload"))) {
 
-            sender.sendMessage(Objects.requireNonNull(this.main.getConfig().getString("Messages.Invalid-Syntax")).replaceAll("&", "§"));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(this.main.getConfig().getString("Messages.Invalid-Syntax"))));
 
             return false;
 
@@ -34,61 +34,58 @@ public class SuicideCommand implements CommandExecutor {
             if (args[0].equalsIgnoreCase("reload") && sender.hasPermission(suicideReload)) {
 
                 this.main.reloadConfig();
-                sender.sendMessage(Objects.requireNonNull(this.main.getConfig().getString("Messages.Reload")).replaceAll("&", "§"));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(this.main.getConfig().getString("Messages.Reload"))));
 
                 return true;
 
             } else {
 
-                sender.sendMessage(Objects.requireNonNull(this.main.getConfig().getString("Messages.No-Permission")).replaceAll("&", "§"));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(this.main.getConfig().getString("Messages.No-Permission"))));
                 return false;
 
             }
         } else if (args.length > 1 && args[0].equalsIgnoreCase("Reload")) {
 
-            sender.sendMessage(Objects.requireNonNull(this.main.getConfig().getString("Messages.Invalid-Syntax")).replaceAll("&", "§"));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(this.main.getConfig().getString("Messages.Invalid-Syntax"))));
             return false;
 
         } else if (args.length == 0) {
 
             if (sender instanceof Player) {
 
-                Player player = (Player) sender;
+                final Player player = (Player) sender;
 
                 if (disabledWorlds.contains(player.getWorld().getName())) {
 
-                    player.sendMessage(Objects.requireNonNull(this.main.getConfig().getString("Messages.Disabled")).replaceAll("&", "§"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(this.main.getConfig().getString("Messages.Disabled"))));
                     return false;
 
                 }
 
-                if (!isCoolDown && !player.hasPermission(suicideBypass)) {
+                if (!isCoolDown && !player.hasPermission(suicideBypass) && this.coolDown.containsKey(player.getUniqueId())) {
 
-                    if (coolDown.containsKey(player.getUniqueId())) {
+                    final long secondsLeft = ((this.coolDown.get(player.getUniqueId()) / 1000) + coolDownTime) - (System.currentTimeMillis() / 1000);
 
-                        long secondsLeft = ((coolDown.get(player.getUniqueId()) / 1000) + coolDownTime) - (System.currentTimeMillis() / 1000);
+                    if (coolDownTime <= 0) return false;
 
-                        if (coolDownTime <= 0) return false;
+                    if (secondsLeft > 0) {
 
-                        if (secondsLeft > 0) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(this.main.getConfig().getString("Messages.On-Cooldown")).replace("%time%", String.valueOf(secondsLeft))));
 
-                            player.sendMessage(Objects.requireNonNull(this.main.getConfig().getString("Messages.On-Cooldown")).replaceAll("&", "§").replaceAll("%time%", String.valueOf(secondsLeft)));
-
-                        } else {
-                            coolDown.remove(player.getUniqueId());
-                            player.setHealth(0.0);
-                            coolDown.put(player.getUniqueId(), System.currentTimeMillis());
-                        }
-
-                        return false;
-
+                    } else {
+                        this.coolDown.remove(player.getUniqueId());
+                        player.setHealth(0.0);
+                        this.coolDown.put(player.getUniqueId(), System.currentTimeMillis());
                     }
+
+                    return false;
+
                 }
 
                 this.main.getPlayers().add(player.getUniqueId());
 
                 player.setHealth(0.0);
-                coolDown.put(player.getUniqueId(), System.currentTimeMillis());
+                this.coolDown.put(player.getUniqueId(), System.currentTimeMillis());
 
                 // BroadCast
                 if (!isBroadCast) {
@@ -97,27 +94,27 @@ public class SuicideCommand implements CommandExecutor {
 
                         Collections.shuffle(broadCast);
 
-                        Bukkit.broadcastMessage(broadCast.get(0).replace("%player%", player.getName()).replace("&", "§"));
+                        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', broadCast.get(0).replace("%player%", player.getName())));
 
                     } else {
 
-                        Bukkit.broadcastMessage(broadCast.get(i).replace("%player%", player.getName()).replace("&", "§"));
-                        i++;
+                        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', broadCast.get(this.i).replace("%player%", player.getName())));
+                        this.i++;
                     }
                 }
 
                 // Suicide Message to the Player
                 if (!isMessage) {
 
-                    player.sendMessage(Objects.requireNonNull(main.getConfig().getString("Messages.Message-Sent-on-Suicide")).replace("&", "§"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', Objects.requireNonNull(main.getConfig().getString("Messages.Message-Sent-on-Suicide"))));
 
                 }
 
                 // Firework on Player Death
                 if (!isFirework) {
 
-                    Firework firework = player.getWorld().spawn(player.getLocation(), Firework.class);
-                    FireworkMeta meta = firework.getFireworkMeta();
+                    final Firework firework = player.getWorld().spawn(player.getLocation(), Firework.class);
+                    final FireworkMeta meta = firework.getFireworkMeta();
                     meta.addEffect(FireworkEffect.builder().withColor(Color.RED).with(Type.BALL_LARGE).withFlicker().build());
                     meta.setPower(1);
                     firework.setFireworkMeta(meta);
@@ -128,17 +125,17 @@ public class SuicideCommand implements CommandExecutor {
                 // Sends the death coords to the player
                 if (!isCoords) {
 
-                    int x = player.getLocation().getBlockX();
-                    int y = player.getLocation().getBlockY();
-                    int z = player.getLocation().getBlockZ();
-                    player.sendMessage(ChatColor.GREEN + "You suicided at: " + ChatColor.RED + "X: " + x + " Y: " + y + " Z: " + z);
+                    final int x = player.getLocation().getBlockX();
+                    final int y = player.getLocation().getBlockY();
+                    final int z = player.getLocation().getBlockZ();
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&fYou suicided at: &cX: " + x + " Y: " + y + " Z: " + z));
 
                 }
 
                 // Sound Feature
                 if (!isSound) {
 
-                    Location loc = player.getLocation();
+                    final Location loc = player.getLocation();
                     player.playSound(loc, Sound.valueOf(playedSound), (soundVolume), (soundPitch));
 
                 }
