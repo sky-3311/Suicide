@@ -50,7 +50,7 @@ Messages:
   Reload: "&aConfig Reloaded."
   Invalid-Syntax: "&cInvalid Syntax!"
   Disabled: "&cSuiciding in this world is disabled."
-  Message-Sent-on-Suicide: "&c&lYou Suicided!"
+  On-Suicide: "&c&lYou Suicided!"
   On-Cooldown: "&6You must wait %time% second(s) to execute this command!"
   Broadcast:
     Random: true

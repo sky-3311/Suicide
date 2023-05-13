@@ -6,14 +6,14 @@ authors: [ Prism3 ]
 description: Simple suicide command with some cool features
 commands:
   suicide:
-    description: To Suicide
+    description: Suicide command
 permissions:
   suicide.command:
     description: "Suicide command"
     default: true
   suicide.bypass:
-    description: "Bypasses the cooldown"
+    description: "Bypass the cooldown"
     default: op
   suicide.reload:
-    description: "Reload the Plugin"
+    description: "Reload the plugin config"
     default: op

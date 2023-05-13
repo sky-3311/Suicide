@@ -8,14 +8,14 @@
 
 A simple plugin yet with some cool features.
 
-This plugin can be found on [Spigot](https://www.spigotmc.org/resources/suicide.93367/), [MC-Market](https://www.mc-market.org/resources/20360/) and [Hyatlas](https://hyatlas.com/shop/suicide.27/).
+This plugin can be found on [Spigot](https://www.spigotmc.org/resources/suicide.93367/), [MC-Market](https://www.mc-market.org/resources/20360/).
 
 If support is needed or a suggesting that needs to be implemented, feel free to ask on the [Discord](https://discord.gg/MfR5mcpVfX).
 
-# About the Plugin
+## About the Plugin
 This plugin adds little tweaks to the /suicide command.
 
-**This is what The Plugin can do:**
+**Features:**
 * Broadcasts if the player has Suicided
 * Display the death location
 * Sends a Firework into the sky upon Suiciding
@@ -23,3 +23,34 @@ This plugin adds little tweaks to the /suicide command.
 * Can be Disabled in Desired Worlds
 * Cooldown for the Command
 * Harmless Firework
+
+
+
+## Permissions
+- suicide.command : Suicide command
+- suicide.bypass : Bypass the suicide cooldown
+- suicide.reload : Reload the plugin config
+
+## Commands
+
+<table>
+  <thead>
+    <tr>
+      <th>Commands</th>
+      <th>Permission</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>suicide</td>
+      <td>suicide.command</td>
+      <td>Command to commit suicide</td>
+    </tr>
+    <tr>
+      <td>suicide reload</td>
+      <td>suicide.reload</td>
+      <td>Reload the plugin's config file to reload</td>
+    </tr>
+  </tbody>
+</table>

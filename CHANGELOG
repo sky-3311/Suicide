@@ -36,3 +36,15 @@ Additions
 
 Changes
     [*] Minor Code Improvements
+
+<-!------------------------------------------ v1.4.5 ------------------------------------------!->
+
+Additions
+    [+] 1.19.3 Support
+
+Changes
+    [*] Code Improvement
+    [*] If the wanted sound is not registered in the Minecraft version it will display an error in the console indicating it rather than an error spam
+
+Fixes
+    [!] suicide.command permission not being checked
