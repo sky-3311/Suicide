@@ -8,7 +8,7 @@
 
 A simple plugin yet with some cool features.
 
-This plugin can be found on [Spigot](https://www.spigotmc.org/resources/suicide.93367/), [MC-Market](https://www.mc-market.org/resources/20360/).
+This plugin can be found on [Spigot](https://www.spigotmc.org/resources/suicide.93367/) & [MC-Market](https://www.mc-market.org/resources/20360/).
 
 If support is needed or a suggesting that needs to be implemented, feel free to ask on the [Discord](https://discord.gg/MfR5mcpVfX).
 
