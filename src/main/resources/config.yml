@@ -20,7 +20,26 @@ Message: false
 Broadcast: false
 
 # Should we disable the Fireworks upon the player's death?
-Firework: false
+# The Type can be one of these [ BALL_LARGE, BALL, STAR, BURST, CREEPER ]
+# Color of the explosion in RGB
+# Fading color of the explosion in RGB
+# Should there be any trail of the firework
+# Should there be any flickering of the firework
+# The power upon explosion, setting it too high might cause FPS Drop
+Firework:
+  Disable: false
+  Type: BALL_LARGE
+  Color:
+    RED: 0
+    GREEN: 255
+    BLUE: 0
+  Fade:
+    RED: 255
+    GREEN: 0
+    BLUE: 0
+  Trail: true
+  Flicker: true
+  Power: 2
 
 # Should we disable death location Coords?
 Coords: false

@@ -2,6 +2,7 @@ package me.prism3.suicide.commands;
 
 import me.prism3.suicide.Main;
 import me.prism3.suicide.utils.Data;
+import me.prism3.suicide.utils.enums.FireworkType;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,10 +11,7 @@ import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import static me.prism3.suicide.utils.Data.*;
 
@@ -100,7 +98,7 @@ public class Suicide implements CommandExecutor {
     }
 
     /**
-     * Spawns a firework at the specified location.
+     * Spawns a firework at the specified location with the desired parameters.
      *
      * @param location The location to spawn the firework.
      */
@@ -110,14 +108,22 @@ public class Suicide implements CommandExecutor {
         final FireworkMeta fireworkMeta = firework.getFireworkMeta();
         final FireworkEffect.Builder builder = FireworkEffect.builder();
 
-        builder.with(FireworkEffect.Type.BALL_LARGE);
-        builder.withColor(Color.GREEN);
-        builder.withFade(Color.RED);
-        builder.withTrail();
-        builder.withFlicker();
+        builder.with(FireworkEffect.Type.valueOf(Arrays.stream(FireworkType.values())
+                .filter(e -> e.name().equalsIgnoreCase(fireworkType))
+                .findFirst()
+                .orElse(FireworkType.BALL_LARGE).name()));
+
+        builder.withColor(Color.fromRGB(fireworkColorRed, fireworkColorGreen, fireworkColorBlue));
+        builder.withFade(Color.fromRGB(fireworkFadeColorRed, fireworkFadeColorGreen, fireworkFadeColorBlue));
+
+        if (isFireworkTrail)
+            builder.withTrail();
+
+        if (isFireworkFlicker)
+            builder.withFlicker();
 
         fireworkMeta.addEffect(builder.build());
-        fireworkMeta.setPower(2);
+        fireworkMeta.setPower(fireworkPower);
         firework.setFireworkMeta(fireworkMeta);
     }
 
@@ -155,7 +161,7 @@ public class Suicide implements CommandExecutor {
 
         // Reload the plugin's configuration file.
         this.main.reloadConfig();
-        this.main.initializeData(new Data());
+        Data.initializer();
 
         // Send a message to the sender indicating that the configuration file was successfully reloaded.
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', reloadMessage));

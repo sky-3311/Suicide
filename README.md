@@ -22,9 +22,7 @@ This plugin adds little tweaks to the /suicide command.
 * Plays a Sound upon Suiciding
 * Can be Disabled in Desired Worlds
 * Cooldown for the Command
-* Harmless Firework
-
-
+* Customisable Firework and Harmless upon explosion
 
 ## Permissions
 - suicide.command : Suicide command
@@ -37,8 +35,8 @@ This plugin adds little tweaks to the /suicide command.
   <thead>
     <tr>
       <th>Commands</th>
-      <th>Permission</th>
-      <th>Description</th>
+      <th>Permissions</th>
+      <th>Descriptions</th>
     </tr>
   </thead>
   <tbody>
@@ -50,7 +48,7 @@ This plugin adds little tweaks to the /suicide command.
     <tr>
       <td>suicide reload</td>
       <td>suicide.reload</td>
-      <td>Reload the plugin's config file to reload</td>
+      <td>Reload the plugin's config</td>
     </tr>
   </tbody>
 </table>

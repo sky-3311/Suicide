@@ -1,12 +1,16 @@
 package me.prism3.suicide.utils;
 
 import me.prism3.suicide.Main;
+import me.prism3.suicide.commands.Suicide;
+import me.prism3.suicide.events.EntityDamage;
+import me.prism3.suicide.events.PlayerDeath;
 
 import java.util.List;
 
+
 public class Data {
 
-    private final Main main = Main.getInstance();
+    private static final Main main = Main.getInstance();
 
     public static String playedSound;
     public static String suicideReload;
@@ -18,17 +22,28 @@ public class Data {
     public static String invalidSyntaxMessage;
     public static String disabledWorldMessage;
     public static String coolDownMessage;
+    public static String fireworkType;
 
     public static long coolDownTime;
 
     public static int resourceID;
     public static int soundVolume;
     public static int soundPitch;
+    public static int fireworkPower;
+    public static int fireworkColorRed;
+    public static int fireworkColorGreen;
+    public static int fireworkColorBlue;
+    public static int fireworkFadeColorRed;
+    public static int fireworkFadeColorGreen;
+    public static int fireworkFadeColorBlue;
+
 
     public static boolean isCoolDown;
     public static boolean isBroadCast;
     public static boolean isMessage;
     public static boolean isFirework;
+    public static boolean isFireworkTrail;
+    public static boolean isFireworkFlicker;
     public static boolean isCoords;
     public static boolean isSound;
 
@@ -36,50 +51,81 @@ public class Data {
     public static List<String> broadCastMessages;
     public static List<String> commandAliases;
 
-    public void initializeStrings() {
+    public static void initializer() {
 
-        playedSound = this.main.getConfig().getString("Sound.SoundPlayed");
-        suicideMessage = this.main.getConfig().getString("Messages.On-Suicide");
-        noPermissionMessage = this.main.getConfig().getString("Messages.No-Permission");
-        reloadMessage = this.main.getConfig().getString("Messages.Reload");
-        invalidSyntaxMessage = this.main.getConfig().getString("Messages.Invalid-Syntax");
-        disabledWorldMessage = this.main.getConfig().getString("Messages.Disabled");
-        coolDownMessage = this.main.getConfig().getString("Messages.On-Cooldown");
+        initializeStrings();
+        initializeLongs();
+        initializeIntegers();
+        initializeBooleans();
+        initializeLists();
+        initializePermissions();
+        initializeEvents();
+        initializeCommands();
     }
 
-    public void initializeLongs() {
+    private static void initializeStrings() {
 
-        coolDownTime = this.main.getConfig().getLong("Cooldown.Timer");
+        playedSound = main.getConfig().getString("Sound.SoundPlayed");
+        suicideMessage = main.getConfig().getString("Messages.On-Suicide");
+        noPermissionMessage = main.getConfig().getString("Messages.No-Permission");
+        reloadMessage = main.getConfig().getString("Messages.Reload");
+        invalidSyntaxMessage = main.getConfig().getString("Messages.Invalid-Syntax");
+        disabledWorldMessage = main.getConfig().getString("Messages.Disabled");
+        coolDownMessage = main.getConfig().getString("Messages.On-Cooldown");
+        fireworkType = main.getConfig().getString("Firework.Type").toUpperCase();
     }
 
-    public void initializeIntegers() {
+    private static void initializeLongs() {
+        coolDownTime = main.getConfig().getLong("Cooldown.Timer");
+    }
+
+    private static void initializeIntegers() {
 
         resourceID = 93367;
-        soundVolume = this.main.getConfig().getInt("Sound.Volume");
-        soundPitch = this.main.getConfig().getInt("Sound.Pitch");
+        soundVolume = main.getConfig().getInt("Sound.Volume");
+        soundPitch = main.getConfig().getInt("Sound.Pitch");
+        fireworkColorRed = main.getConfig().getInt("Firework.Color.RED");
+        fireworkColorGreen = main.getConfig().getInt("Firework.Color.GREEN");
+        fireworkColorBlue = main.getConfig().getInt("Firework.Color.BLUE");
+        fireworkFadeColorRed = main.getConfig().getInt("Firework.Fade.RED");
+        fireworkFadeColorRed = main.getConfig().getInt("Firework.Fade.GREEN");
+        fireworkFadeColorRed = main.getConfig().getInt("Firework.Fade.BLUE");
+        fireworkPower = main.getConfig().getInt("Firework.Power");
     }
 
-    public void initializeBooleans() {
+    private static void initializeBooleans() {
 
-        isCoolDown = this.main.getConfig().getBoolean("Cooldown.Disable");
-        isBroadCast = this.main.getConfig().getBoolean("Broadcast");
-        isMessage = this.main.getConfig().getBoolean("Message");
-        isFirework = this.main.getConfig().getBoolean("Firework");
-        isCoords = this.main.getConfig().getBoolean("Coords");
-        isSound = this.main.getConfig().getBoolean("Sound.Disable");
+        isCoolDown = main.getConfig().getBoolean("Cooldown.Disable");
+        isBroadCast = main.getConfig().getBoolean("Broadcast");
+        isMessage = main.getConfig().getBoolean("Message");
+        isFirework = main.getConfig().getBoolean("Firework.Disable");
+        isFireworkTrail = main.getConfig().getBoolean("Firework.Trail");
+        isFireworkFlicker = main.getConfig().getBoolean("Firework.Flicker");
+        isCoords = main.getConfig().getBoolean("Coords");
+        isSound = main.getConfig().getBoolean("Sound.Disable");
     }
 
-    public void initializeLists() {
+    private static void initializeLists() {
 
-        disabledWorlds = this.main.getConfig().getStringList("Disabled-Worlds");
-        broadCastMessages = this.main.getConfig().getStringList("Messages.Broadcast.Messages");
-        commandAliases = this.main.getConfig().getStringList("Aliases");
+        disabledWorlds = main.getConfig().getStringList("Disabled-Worlds");
+        broadCastMessages = main.getConfig().getStringList("Messages.Broadcast.Messages");
+        commandAliases = main.getConfig().getStringList("Aliases");
     }
 
-    public void initializeStringPermissions() {
+    private static void initializePermissions() {
 
         suicideCommand = "suicide.command";
         suicideReload = "suicide.reload";
         suicideBypass = "suicide.bypass";
+    }
+
+    private static void initializeEvents() {
+
+        main.getServer().getPluginManager().registerEvents(new PlayerDeath(), main);
+        main.getServer().getPluginManager().registerEvents(new EntityDamage(), main);
+    }
+
+    private static void initializeCommands() {
+        main.getCommand("suicide").setExecutor(new Suicide());
     }
 }

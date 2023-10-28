@@ -48,3 +48,10 @@ Changes
 
 Fixes
     [!] suicide.command permission not being checked
+
+<-!------------------------------------------ v1.4.6 ------------------------------------------!->
+
+Additions
+    [+] 1.20.2 Support
+    [+] Firework is now customizable
+
